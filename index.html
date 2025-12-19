@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiaohu Huang | The University of Hong Kong</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #0f766e;       /* Teal 700 */
+            --primary-light: #f0fdfa; /* Teal 50 */
+            --link: #0369a1;          /* Sky 700 */
+            --text-main: #1e293b;     /* Slate 800 */
+            --text-muted: #64748b;    /* Slate 500 */
+            --bg-body: #ffffff;
+            
+            /* Divider Color - Darkened for visibility */
+            --border: #cbd5e1;        /* Slate 300 */
+            
+            --highlight: #be123c;     /* Rose 700 */
+            
+            /* Status Card Colors (Amber) */
+            --status-bg: #fffbeb;
+            --status-border: #fcd34d;
+            --status-text: #92400e;
+            
+            --sidebar-width: 300px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main Layout Grid */
+        .page-wrapper {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            gap: 0; 
+            align-items: start;
+        }
+
+        /* --- Left Sidebar (Profile) --- */
+        .profile-sidebar {
+            position: sticky;
+            top: 40px;
+            text-align: left;
+            padding-right: 40px; 
+        }
+
+        /* Name moved to top, added some bottom margin */
+        .profile-name {
+            /* Modified: Font size reduced from 1.8rem to 1.5rem */
+            font-size: 1.5rem; 
+            font-weight: 700;
+            margin: 0 0 20px 0;
+            color: #111;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-img-container {
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.15);
+            display: block;
+        }
+
+        /* The Quote - Directly under photo */
+        .profile-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-top: 12px;
+            opacity: 0.85;
+            padding-left: 5px; 
+        }
+
+        .profile-role {
+            font-size: 1rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        /* Status Card */
+        .status-card {
+            background-color: var(--status-bg);
+            border: 1px solid var(--status-border);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 20px;
+            color: var(--status-text);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(251, 191, 36, 0.1);
+        }
+        
+        .status-card-title {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+            color: #78350f;
+        }
+        
+        .status-card-title svg {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            stroke: currentColor;
+        }
+
+        .status-card-sub {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px dashed rgba(146, 64, 14, 0.2);
+        }
+
+        .profile-bio {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .profile-bio a {
+            color: var(--text-main);
+            text-decoration: underline;
+            text-decoration-color: var(--primary);
+            text-underline-offset: 2px;
+        }
+
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links svg {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+            stroke: currentColor;
+        }
+
+        /* --- Right Content Area --- */
+        .main-content {
+            min-width: 0;
+            /* THE DIVIDER LINE */
+            border-left: 2px solid var(--border); 
+            padding-left: 40px; 
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        h3.section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #111;
+            margin: 0;
+            padding-right: 10px;
+            display: inline-block;
+        }
+        
+        .pub-header-container {
+            display: flex;
+            align-items: baseline;
+            gap: 25px;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .standard-header {
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+        
+        h3.section-title span {
+            background: linear-gradient(120deg, var(--primary-light) 0%, transparent 100%);
+            padding-right: 10px;
+        }
+
+        /* News List */
+        .news-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+        .news-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: baseline;
+        }
+        .news-date {
+            font-family: 'Inter', monospace;
+            font-weight: 600;
+            color: var(--primary);
+            width: 50px;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Experience */
+        .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .experience-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed var(--border);
+            padding-bottom: 10px;
+        }
+        .experience-item:last-child {
+            border-bottom: none;
+        }
+        .exp-main {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        .exp-sub {
+            font-weight: 400;
+            color: var(--text-muted);
+            margin-left: 6px;
+            font-size: 0.95rem;
+        }
+        .exp-date {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        /* Publications */
+        .pub-filter {
+            display: flex;
+            gap: 20px;
+            font-size: 1.1rem;
+        }
+        .pub-filter button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
+            font-family: inherit;
+            font-size: inherit;
+            transition: color 0.2s;
+        }
+        .pub-filter button:hover {
+            color: var(--text-main);
+        }
+        .pub-filter button.active {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .pub-filter button.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        /* UPDATED PUBLICATION STYLES */
+        .publication-item {
+            display: flex;
+            gap: 25px; /* Increased gap */
+            margin-bottom: 35px; /* Increased margin */
+            align-items: flex-start;
+        }
+
+        .pub-img {
+            width: 300px; /* Enlarged image width */
+            height: auto;
+            object-fit: cover;
+            border-radius: 6px;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 0.7rem;
+        }
+
+        .pub-content {
+            flex: 1;
+        }
+
+        .pub-title {
+            font-weight: bold; /* Bolder title */
+            font-size: 1.1rem; /* Slightly larger title */
+            color: var(--link);
+            text-decoration: none;
+            line-height: 1.3;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .pub-title:hover {
+            text-decoration: underline;
+        }
+
+        .pub-authors {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+        .pub-authors strong {
+            color: #000;
+        }
+
+        .pub-venue {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* New Description Style */
+        .pub-desc {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #555;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .tag-highlight {
+            color: var(--highlight);
+            font-weight: 600;
+            font-size: 0.75rem;
+            margin-left: 6px;
+            background: #fff0f2;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-style: normal;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-wrapper {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 30px 20px;
+            }
+
+            .profile-sidebar {
+                position: static;
+                text-align: center;
+                border-bottom: 1px solid var(--border);
+                padding-bottom: 30px;
+                margin-bottom: 10px;
+                padding-right: 0; 
+            }
+            
+            .profile-img {
+                margin: 0 auto;
+            }
+            
+            .main-content {
+                border-left: none; 
+                padding-left: 0;
+            }
+            
+            .status-card {
+                max-width: 400px;
+                margin: 20px auto;
+                text-align: left;
+            }
+
+            .profile-bio {
+                max-width: 500px;
+                margin: 0 auto 20px auto;
+            }
+
+            .social-links {
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .pub-img {
+                display: none;
+            }
+            
+            .experience-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .pub-header-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+    <!-- LEFT SIDEBAR: Profile Info -->
+    <aside class="profile-sidebar">
+        <!-- Name moved to top -->
+        <h1 class="profile-name">Xiaohu Huang</h1>
+
+        <div class="profile-img-container">
+            <img src="assets/selfie_1.jpg" alt="Xiaohu Huang" class="profile-img">
+            <!-- The Quote: Directly under photo -->
+            <div class="profile-quote">"Can we get much higher?"</div>
+        </div>
+        
+        <div class="profile-role">Ph.D. Student @ The University of Hong Kong</div>
+        
+        <!-- Highlighted Status Card -->
+        <div class="status-card">
+            <div class="status-card-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                Open for Opportunities
+            </div>
+            <div style="margin-bottom: 4px; line-height: 1.4;">
+                Actively seeking <strong>Research Internships</strong> and <strong>Full-time Positions</strong> in <strong>2026</strong>.
+            </div>
+            <div class="status-card-sub">
+                🎓 Expected Graduation: <strong>2027</strong>
+            </div>
+        </div>
+
+
+        <div class="social-links">
+            <a href="mailto:huangxiaohu@connect.hku.hk">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                huangxiaohu@connect.hku.hk
+            </a>
+            <a href="https://scholar.google.com/citations?user=sBjFwuQAAAAJ&hl=en">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                Google Scholar
+            </a>
+        </div>
+
+        <div class="profile-bio">
+            <p>
+                I am a third-year Ph.D. student at <a href="https://www.hku.hk/">The University of Hong Kong</a>, supervised by <a href="https://www.kaihan.org/">Prof. Kai Han</a>.
+            </p>
+            <p>
+                Previously at <a href="http://english.hust.edu.cn/">Huazhong University of Science and Technology</a>, supervised by <a href="https://scholar.google.com/citations?user=nRc8u6gAAAAJ&hl=en">Prof. Bin Feng</a> & <a href="https://xwcv.github.io/">Prof. Xinggang Wang</a>.
+            </p>
+            <!-- Research line removed from here -->
+        </div>
+    </aside>
+
+    <!-- RIGHT CONTENT: News, Experience, Publications -->
+    <main class="main-content">
+        
+        <!-- News Section -->
+        <section>
+            <div class="standard-header">
+                <h3 class="section-title"><span>News</span></h3>
+            </div>
+            <ul class="news-list">
+                <li><span class="news-date">2025</span> Papers accepted to NeurIPS 2025, CVPR 2025, ACL 2025, and IJCV 2025.</li>
+                <li><span class="news-date">2024</span> Papers accepted to ICLR 2024, Pattern Recognition 2024, and CVPR Workshop 2024.</li>
+                <li><span class="news-date">2023</span> Papers accepted to ICLR 2023 and IEEE TIP 2023.</li>
+                <li><span class="news-date">2022</span> Paper accepted to IEEE TBIOM 2022.</li>
+                <li><span class="news-date">2021</span> Paper accepted to ICCV 2021.</li>
+            </ul>
+        </section>
+
+        <!-- Experience Section -->
+        <section>
+            <div class="standard-header">
+                <h3 class="section-title"><span>Experience</span></h3>
+            </div>
+            <div class="experience-list">
+                <div class="experience-item">
+                    <div>
+                        <span class="exp-main">Research Intern, TikTok</span>
+                        <span class="exp-sub">Video-Audio Joint Generation</span>
+                    </div>
+                    <div class="exp-date">2025 - Now</div>
+                </div>
+
+                <div class="experience-item">
+                    <div>
+                        <span class="exp-main">Research Intern, Baidu Inc</span>
+                        <span class="exp-sub">Multimodal Video Understanding</span>
+                    </div>
+                    <div class="exp-date">2022 - 2025</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Interest Section (Moved from Sidebar) -->
+        <section>
+            <div class="standard-header">
+                <h3 class="section-title"><span>Research Interest</span></h3>
+            </div>
+            <div style="font-size: 1.05rem; color: var(--text-main); line-height: 1.6;">
+                Research: <strong>Video-centric Computer Vision</strong> (Generation, Understanding, Recognition).
+            </div>
+        </section>
+
+        <!-- Publications Section -->
+        <section id="publications">
+            <div class="pub-header-container">
+                <h3 class="section-title"><span>Publications</span></h3>
+                <div class="pub-filter" role="tablist">
+                    <button id="btn-selected" class="active" type="button">Selected</button>
+                    <button id="btn-all" type="button">All</button>
+                </div>
+            </div>
+
+            <!-- Selected Papers -->
+            <div id="pub-selected">
+                <!-- 2025 -->
+                <div class="publication-item">
+                    <img src="assets/jova.jpg" class="pub-img" alt="jova">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/jova/" class="pub-title">JoVA: Unified Multimodal Learning for Joint Video-Audio Generation</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Qiangpeng Yang, Shilei Wen, Kai Han</div>
+                        <div class="pub-venue">arXiv preprint (2512.13677), 2025</div>
+                        <div class="pub-desc">A unified framework for generating synchronized video and audio through multimodal learning.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/3drs.png" class="pub-img" alt="3drs">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/3drs/" class="pub-title">MLLMs Need 3D-Aware Representation Supervision for Scene Understanding</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Jingjing Wu, Qunyi Xie, Kai Han</div>
+                        <div class="pub-venue">NeurIPS 2025</div>
+                        <div class="pub-desc">Proposing 3D-aware representation supervision to enhance scene understanding capabilities in MLLMs.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/prunevid.png" class="pub-img" alt="PruneVid">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/prunevid/" class="pub-title">PruneVid: Visual Token Pruning for Efficient Video Large Language Models</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Kai Han</div>
+                        <div class="pub-venue">ACL 2025</div>
+                        <div class="pub-desc">An efficient visual token pruning method to accelerate Video Large Language Models without sacrificing performance.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/change3d.png" class="pub-img" alt="change3d">
+                    <div class="pub-content">
+                        <a href="https://zhuduowang.github.io/Change3D/" class="pub-title">Change3D: Revisiting Change Detection and Captioning from A Video Modeling Perspective</a>
+                        <div class="pub-authors">Duowang Zhu, <strong>Xiaohu Huang</strong>, Haiyan Huang, Hao Zhou, Zhenfeng Shao</div>
+                        <div class="pub-venue">CVPR 2025 <span class="tag-highlight">Highlight</span></div>
+                        <div class="pub-desc">Revisiting change detection and captioning tasks through the lens of video modeling techniques.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/skim.jpg" class="pub-img" alt="skim">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2406.08814" class="pub-title">Skim then Focus: Integrating Contextual and Fine-grained Views for Repetitive Action Counting</a>
+                        <div class="pub-authors">Zhengqi Zhao*, <strong>Xiaohu Huang</strong>*, Hao Zhou, Kun Yao, Errui Ding, Jingdong Wang, Xinggang Wang, Wenyu Liu, Bin Feng</div>
+                        <div class="pub-venue">IJCV 2025</div>
+                        <div class="pub-desc">A coarse-to-fine framework integrating contextual and fine-grained views for accurate repetitive action counting.</div>
+                    </div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="publication-item">
+                    <img src="assets/froster.jpg" class="pub-img" alt="froster">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/froster/" class="pub-title">FROSTER: Frozen CLIP Is A Strong Teacher for Open-Vocabulary Action Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Kun Yao, Kai Han</div>
+                        <div class="pub-venue">ICLR 2024</div>
+                        <div class="pub-desc">Leveraging frozen CLIP models as effective teachers to improve open-vocabulary action recognition.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/scd.png" class="pub-img" alt="scd">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2304.02364" class="pub-title">What's in a Name? Beyond Class Indices for Image Recognition</a>
+                        <div class="pub-authors">Kai Han*, <strong>Xiaohu Huang*</strong>, Yandong Li, Sagar Vaze, Jie Li, Xuhui Jia</div>
+                        <div class="pub-venue">CVPR 2024 Workshop <span class="tag-highlight">Spotlight</span></div>
+                        <div class="pub-desc">Investigating the semantic impact of using class names versus indices in image recognition tasks.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/skeletongcl.png" class="pub-img" alt="skeletongcl">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2301.10900" class="pub-title">Graph Contrastive Learning for Skeleton-based Action Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Bin Feng, Xinggang Wang, Wenyu Liu, Jian Wang, Haocheng Feng, Junyu Han, Errui Ding, Jingdong Wang</div>
+                        <div class="pub-venue">ICLR 2023</div>
+                        <div class="pub-desc">A graph contrastive learning framework designed to learn robust representations for skeleton-based action recognition.</div>
+                    </div>
+                </div>
+                
+                <!-- 2023 -->
+                <div class="publication-item">
+                    <img src="assets/cag.jpg" class="pub-img" alt="cag">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2308.06707" class="pub-title">Condition-Adaptive Graph Convolution Learning for Skeleton-Based Gait Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Xinggang Wang, Zhidianqiu Jin, Bo Yang, Botao He, Bin Feng, Wenyu Liu</div>
+                        <div class="pub-venue">IEEE TIP 2023</div>
+                        <div class="pub-desc">A condition-adaptive graph convolution network for robust gait recognition under complex environmental variations.</div>
+                    </div>
+                </div>
+
+                <!-- 2021 -->
+                <div class="publication-item">
+                    <img src="assets/cstl.jpg" class="pub-img" alt="cstl">
+                    <div class="pub-content">
+                        <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Huang_Context-Sensitive_Temporal_Feature_Learning_for_Gait_Recognition_ICCV_2021_paper.pdf" class="pub-title">Context-sensitive temporal feature learning for gait recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Duowang Zhu, Hao Wang, Xinggang Wang, Bo Yang, Botao He, Wenyu Liu, Bin Feng</div>
+                        <div class="pub-venue">ICCV 2021</div>
+                        <div class="pub-desc">Learning context-sensitive temporal features to significantly improve the robustness of gait recognition.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Papers (Hidden by default) -->
+            <div id="pub-all" style="display:none;">
+                <!-- 2025 -->
+                <div class="publication-item">
+                    <img src="assets/jova.jpg" class="pub-img" alt="jova">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/jova/" class="pub-title">JoVA: Unified Multimodal Learning for Joint Video-Audio Generation</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Qiangpeng Yang, Shilei Wen, Kai Han</div>
+                        <div class="pub-venue">arXiv preprint (2512.13677), 2025</div>
+                        <div class="pub-desc">A unified framework for generating synchronized video and audio through multimodal learning.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/3drs.png" class="pub-img" alt="3drs">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/3drs/" class="pub-title">MLLMs Need 3D-Aware Representation Supervision for Scene Understanding</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Jingjing Wu, Qunyi Xie, Kai Han</div>
+                        <div class="pub-venue">NeurIPS 2025</div>
+                        <div class="pub-desc">Proposing 3D-aware representation supervision to enhance scene understanding capabilities in MLLMs.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/prunevid.png" class="pub-img" alt="PruneVid">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/prunevid/" class="pub-title">PruneVid: Visual Token Pruning for Efficient Video Large Language Models</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Kai Han</div>
+                        <div class="pub-venue">ACL 2025</div>
+                        <div class="pub-desc">An efficient visual token pruning method to accelerate Video Large Language Models without sacrificing performance.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/change3d.png" class="pub-img" alt="change3d">
+                    <div class="pub-content">
+                        <a href="https://zhuduowang.github.io/Change3D/" class="pub-title">Change3D: Revisiting Change Detection and Captioning from A Video Modeling Perspective</a>
+                        <div class="pub-authors">Duowang Zhu, <strong>Xiaohu Huang</strong>, Haiyan Huang, Hao Zhou, Zhenfeng Shao</div>
+                        <div class="pub-venue">CVPR 2025 <span class="tag-highlight">Highlight</span></div>
+                        <div class="pub-desc">Revisiting change detection and captioning tasks through the lens of video modeling techniques.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/skim.jpg" class="pub-img" alt="skim">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2406.08814" class="pub-title">Skim then Focus: Integrating Contextual and Fine-grained Views for Repetitive Action Counting</a>
+                        <div class="pub-authors">Zhengqi Zhao*, <strong>Xiaohu Huang</strong>*, Hao Zhou, Kun Yao, Errui Ding, Jingdong Wang, Xinggang Wang, Wenyu Liu, Bin Feng</div>
+                        <div class="pub-venue">IJCV 2025</div>
+                        <div class="pub-desc">A coarse-to-fine framework integrating contextual and fine-grained views for accurate repetitive action counting.</div>
+                    </div>
+                </div>
+
+                <!-- 2024 -->
+                <div class="publication-item">
+                    <img src="assets/froster.jpg" class="pub-img" alt="froster">
+                    <div class="pub-content">
+                        <a href="https://visual-ai.github.io/froster/" class="pub-title">FROSTER: Frozen CLIP Is A Strong Teacher for Open-Vocabulary Action Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Kun Yao, Kai Han</div>
+                        <div class="pub-venue">ICLR 2024</div>
+                        <div class="pub-desc">Leveraging frozen CLIP models as effective teachers to improve open-vocabulary action recognition.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/changevit.png" class="pub-img" alt="changevit">
+                    <div class="pub-content">
+                        <a href="https://doi.org/10.1016/j.patcog.2025.112539" class="pub-title">Changevit: Unleashing plain vision transformers for change detection</a>
+                        <div class="pub-authors">Duowang Zhu, <strong>Xiaohu Huang</strong>, Haiyan Huang, Zhenfeng Shao, Qimin Cheng</div>
+                        <div class="pub-venue">Pattern Recognition, 2024</div>
+                        <div class="pub-desc">Exploring the potential of plain vision transformers for efficient remote sensing change detection.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/scd.png" class="pub-img" alt="scd">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2304.02364" class="pub-title">What's in a Name? Beyond Class Indices for Image Recognition</a>
+                        <div class="pub-authors">Kai Han*, <strong>Xiaohu Huang*</strong>, Yandong Li*, Sagar Vaze, Jie Li, Xuhui Jia</div>
+                        <div class="pub-venue">CVPR 2024 Workshop <span class="tag-highlight">Spotlight</span></div>
+                        <div class="pub-desc">Investigating the semantic impact of using class names versus indices in image recognition tasks.</div>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <img src="assets/skeletongcl.png" class="pub-img" alt="skeletongcl">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2301.10900" class="pub-title">Graph Contrastive Learning for Skeleton-based Action Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Hao Zhou, Bin Feng, Xinggang Wang, Wenyu Liu, Jian Wang, Haocheng Feng, Junyu Han, Errui Ding, Jingdong Wang</div>
+                        <div class="pub-venue">ICLR 2023</div>
+                        <div class="pub-desc">A graph contrastive learning framework designed to learn robust representations for skeleton-based action recognition.</div>
+                    </div>
+                </div>
+
+                <!-- 2023 -->
+                <div class="publication-item">
+                    <img src="assets/cag.jpg" class="pub-img" alt="cag">
+                    <div class="pub-content">
+                        <a href="https://arxiv.org/abs/2308.06707" class="pub-title">Condition-Adaptive Graph Convolution Learning for Skeleton-Based Gait Recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Xinggang Wang, Zhidianqiu Jin, Bo Yang, Botao He, Bin Feng, Wenyu Liu</div>
+                        <div class="pub-venue">IEEE TIP 2023</div>
+                        <div class="pub-desc">A condition-adaptive graph convolution network for robust gait recognition under complex environmental variations.</div>
+                    </div>
+                </div>
+
+                <!-- 2022 -->
+                <div class="publication-item">
+                    <div class="pub-img">Thumbnail</div>
+                    <div class="pub-content">
+                        <a href="#" class="pub-title">Star: Spatio-temporal augmented relation network for gait recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Xinggang Wang, Botao He, Shan He, Wenyu Liu, Bin Feng</div>
+                        <div class="pub-venue">IEEE TBIOM 2022</div>
+                        <div class="pub-desc">A spatio-temporal augmented relation network to capture structural features for gait recognition.</div>
+                    </div>
+                </div>
+
+                <!-- 2021 -->
+                <div class="publication-item">
+                    <img src="assets/cstl.jpg" class="pub-img" alt="cstl">
+                    <div class="pub-content">
+                        <a href="https://openaccess.thecvf.com/content/ICCV2021/papers/Huang_Context-Sensitive_Temporal_Feature_Learning_for_Gait_Recognition_ICCV_2021_paper.pdf" class="pub-title">Context-sensitive temporal feature learning for gait recognition</a>
+                        <div class="pub-authors"><strong>Xiaohu Huang</strong>, Duowang Zhu, Hao Wang, Xinggang Wang, Bo Yang, Botao He, Wenyu Liu, Bin Feng</div>
+                        <div class="pub-venue">ICCV 2021</div>
+                        <div class="pub-desc">Learning context-sensitive temporal features to significantly improve the robustness of gait recognition.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2025 Xiaohu Huang. Last updated: Dec 2025.
+        </footer>
+    </main>
+
+</div>
+
+<script>
+  (function () {
+    const btnSelected = document.getElementById('btn-selected');
+    const btnAll = document.getElementById('btn-all');
+    const selectedList = document.getElementById('pub-selected');
+    const allList = document.getElementById('pub-all');
+
+    function showSelected() {
+      btnSelected.classList.add('active');
+      btnAll.classList.remove('active');
+      selectedList.style.display = '';
+      allList.style.display = 'none';
+    }
+
+    function showAll() {
+      btnAll.classList.add('active');
+      btnSelected.classList.remove('active');
+      allList.style.display = '';
+      selectedList.style.display = 'none';
+    }
+
+    btnSelected.addEventListener('click', showSelected);
+    btnAll.addEventListener('click', showAll);
+  })();
+</script>
+
+</body>
+</html>
